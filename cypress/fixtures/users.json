@@ -1,0 +1,15 @@
+{
+  "normal_user": {
+    "nome": "Usuário Normal de Teste",
+    "email": "user-normal-email@gmail.com",
+    "password": "senh@Forte",
+     "admin": "false"
+  },
+
+  "admin_user": {
+    "nome": "Usuário Admin de Teste",
+    "email": "user-admin-email@gmail.com",
+    "password": "senh@Forte",
+     "admin": "true"
+  }
+}
