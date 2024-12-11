@@ -23,3 +23,45 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getByEmail', (email) => {
+    
+    cy.api({
+        url: 'https://serverest.dev/usuarios',
+        method: 'GET',
+    }).then(response => {
+        expect(response.status).to.eql(200)
+        const users = response.body.usuarios || response.body
+        expect(Array.isArray(users)).to.be.true
+        const user = users.find(u => u.email === email)
+        return user
+    })
+})
+
+Cypress.Commands.add('deleteByEmail', (email) => {
+    cy.getByEmail(email).then(user => {
+        expect(user).to.not.be.undefined
+        const userId = user._id
+
+        cy.api({
+            url: `https://serverest.dev/usuarios/${userId}`,
+            method: 'DELETE',
+        })
+    })
+})
+
+Cypress.Commands.add('createUserApi', (user) => {
+    cy.api({
+        url: 'https://serverest.dev/usuarios',
+        method: 'POST',
+        body: {
+          nome: user.nome,
+          email: user.email,
+          password: user.password,
+          administrador: user.admin
+        }
+        }).then(response => {
+          expect(response.status).to.eql(201)
+          expect(response.body.message).to.contains('Cadastro realizado com sucesso')
+      })
+})
