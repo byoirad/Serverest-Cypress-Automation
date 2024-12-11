@@ -13,12 +13,18 @@ const LoginPage = {
         cy.get(el.inputPassword).type(data.password)
     },
 
-    loginFormSubmit: function () {
+    loginFormSubmitNormal: function () {
         cy.get(el.loginButton).click()
 
         cy.get('div section[class="row espacamento"]')
             .should('be.visible')
     },
+
+    loginFormSubmitAdmin: function(){
+        cy.get(el.loginButton).click()
+        
+        cy.get('p[class="lead"]').should('have.text', 'Este é seu sistema para administrar seu ecommerce.')
+    }
 
 }
 
